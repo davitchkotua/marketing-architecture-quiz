@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-bg-dark text-txt-light;
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply w-full rounded-xl border border-border-dark bg-surface-dark px-4 py-3 text-sm text-txt-light placeholder:text-txt-muted focus:outline-none focus:border-accent transition;
+  }
+
+  .btn-primary {
+    @apply inline-block rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-bg-dark hover:bg-accent-dark transition-colors;
+  }
+
+  .btn-secondary {
+    @apply inline-block rounded-xl border border-border-dark px-6 py-3.5 text-sm font-semibold text-txt-light hover:border-accent/50 transition-colors;
+  }
+
+  .card-dark {
+    @apply rounded-2xl border border-border-dark bg-surface-dark p-6;
+  }
+
+  .card-light {
+    @apply rounded-2xl border border-border bg-surface p-6;
+  }
+
+  .score-bar-track {
+    @apply h-2 w-full rounded-full bg-border-dark overflow-hidden;
+  }
+
+  .score-bar-fill {
+    @apply h-full rounded-full bg-accent transition-all duration-700;
+  }
+}
+
+@layer utilities {
+  .animate-fadein {
+    animation: fadein 0.25s ease-out both;
+  }
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
