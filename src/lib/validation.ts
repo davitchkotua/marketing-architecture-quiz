@@ -12,6 +12,7 @@ export const submissionSchema = z.object({
   }),
 
   // Lead form — optional
+  phone: z.string().optional(),
   company: z.string().optional(),
   role: z.string().optional(),
   website: z.string().optional(),

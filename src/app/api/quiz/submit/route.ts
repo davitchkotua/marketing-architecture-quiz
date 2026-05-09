@@ -3,7 +3,7 @@ import { submissionSchema } from "@/lib/validation";
 import { computeScore } from "@/lib/scoring";
 import { resultContent, seatContent } from "@/lib/results";
 import { getServerSupabase } from "@/lib/supabase";
-import { sendQuizResultEmail } from "@/lib/email";
+import { sendQuizResultEmail, sendLeadNotification } from "@/lib/email";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,6 +34,7 @@ export async function POST(req: Request) {
   const insert = {
     name: data.name,
     email: data.email,
+    phone: data.phone ?? null,
     company: data.company ?? null,
     role: data.role ?? null,
     website: data.website ?? null,
@@ -84,6 +85,12 @@ export async function POST(req: Request) {
       .eq("id", row.id);
   } catch (e) {
     console.error("[quiz/submit] email send failed", e);
+  }
+
+  try {
+    await sendLeadNotification({ name: data.name, email: data.email, phone: data.phone });
+  } catch (e) {
+    console.error("[quiz/submit] lead notification failed", e);
   }
 
   return NextResponse.json({ id: row.id });

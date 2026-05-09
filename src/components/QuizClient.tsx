@@ -15,6 +15,7 @@ type Answers = Record<string, AnswerValue>;
 const leadSchema = z.object({
   name: z.string().min(1, "სახელი სავალდებულოა"),
   email: z.string().email("ელფოსტა არასწორია"),
+  phone: z.string().optional(),
   consent: z.literal(true, {
     errorMap: () => ({ message: "გთხოვ, დაეთანხმე" }),
   }),
@@ -221,7 +222,7 @@ export default function QuizClient() {
                 სად გამოგიგზავნოთ შედეგი?
               </h2>
               <p className="text-sm text-txt-muted mb-8">
-                შედეგს გაჩვენებთ ეკრანზეც და გამოგიგზავნით ელფოსტაზეც, რომ შემდეგ დაბრუნება შეძლოთ.
+                შედეგს ელფოსტაზე გამოგიგზავნით. ტელეფონის ნომრის დატოვება სურვილისამებრ არის.
               </p>
 
               {/* Required */}
@@ -253,6 +254,18 @@ export default function QuizClient() {
                   {errors.email && (
                     <p className="text-xs text-red-400 mt-1">{errors.email.message}</p>
                   )}
+                </div>
+
+                <div>
+                  <label className="block text-sm text-txt-light mb-1.5">
+                    ტელეფონი <span className="text-txt-muted text-xs">(სურვილისამებრ)</span>
+                  </label>
+                  <input
+                    {...register("phone")}
+                    type="tel"
+                    placeholder="+995 5XX XXX XXX"
+                    className="input-field"
+                  />
                 </div>
               </div>
 

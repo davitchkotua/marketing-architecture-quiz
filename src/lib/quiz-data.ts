@@ -55,7 +55,7 @@ export const quizQuestions: QuizQuestion[] = [
       },
       {
         key: "B",
-        label: "გვყავს штатный მარკეტერი",
+        label: "გვყავს მარკეტერი",
         modifier: { courseFit: 15 },
         gapSignal: { gap: "TEAM_AGENCY", weight: 2 },
       },
@@ -275,7 +275,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "q7",
     number: 7,
-    title: "ბოლო 3 თვეში — ადამიანი სად ჩერდება ყველაზე ხშირად?",
+    title: "ბოლო 3 თვეში, სად კარგავ მომხმარებელს ყველაზე ხშირად?",
     type: "single",
     options: [
       {
@@ -298,13 +298,13 @@ export const quizQuestions: QuizQuestion[] = [
       },
       {
         key: "D",
-        label: "შეთავაზებამდე მდის, მაგრამ ყიდვა ბლოკდება",
+        label: "ყიდვის მომენტამდე მოდის, მაგრამ მერე ქრება",
         modifier: { courseFit: 8 },
         gapSignal: { gap: "OFFER", weight: 2 },
       },
       {
         key: "E",
-        label: "ვაკვირდებით — ეტაპები გვყავს და ვიცით სად კარგავს",
+        label: "ვაკვირდებით ყველა ეტაპს და ზუსტად ვიცით, რომელ ეტაპზე ვკარგავთ მომხმარებელს",
         modifier: { systemClarity: 10, budgetUse: 6 },
       },
     ],
@@ -314,7 +314,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "q8",
     number: 8,
-    title: "გდებს კვირეული ან თვიური Marketing Control Sheet — ყველა ძირითადი ციფრი ერთ ადგილზე?",
+    title: "გაქვს ადგილი, სადაც შენი მარკეტინგის ყველა ძირითადი ციფრი ერთ ადგილზე ჩანს — კვირა-კვირა ან თვე-თვე?",
     type: "single",
     options: [
       {
@@ -368,7 +368,7 @@ export const quizQuestions: QuizQuestion[] = [
       },
       {
         key: "C",
-        label: "ნაწილობრივ — რაღაც ვითხოვ, შედეგი ბუნდოვანია",
+        label: "ნაწილობრივ — დაპირება არის, მაგრამ მაინც ბუნდოვანია შედეგი",
         modifier: { courseFit: 14, budgetUse: -4 },
         gapSignal: { gap: "TEAM_AGENCY", weight: 3 },
       },
@@ -395,7 +395,7 @@ export const quizQuestions: QuizQuestion[] = [
     options: [
       {
         key: "A",
-        label: "არ მახსოვს — ან არასდროს",
+        label: "არ მახსოვს — არ მაქვს",
         modifier: { systemClarity: -10, courseFit: 12 },
         gapSignal: { gap: "LEARNING_PATH", weight: 5 },
       },
@@ -417,7 +417,7 @@ export const quizQuestions: QuizQuestion[] = [
       },
       {
         key: "E",
-        label: "რეგულარულად ვახლებ",
+        label: "რეგულარულად ვამოწმებ და ვანახლებ",
         modifier: { systemClarity: 16, budgetUse: 6 },
       },
     ],
@@ -427,7 +427,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: "q11",
     number: 11,
-    title: "შენი მარკეტინგი მიკავშირებულია გაყიდვის ფაქტობრივ ციფრებს?",
+    title: "შენი მარკეტინგი პირდაპირ დაკავშირებულია გაყიდვის ფაქტობრივ ციფრებს?",
     type: "single",
     options: [
       {
@@ -460,13 +460,12 @@ export const quizQuestions: QuizQuestion[] = [
     ],
   },
 
-  // Q12 — self-identified goals (multi, feeds primaryGap + courseFit)
+  // Q12 — self-identified goals (single, feeds primaryGap + courseFit)
   {
     id: "q12",
     number: 12,
-    title: "რა გინდა, რომ გაიგო ამ ქვიზის შემდეგ? მონიშნე ყველა შესაბამისი.",
-    helperText: "შეგიძლია რამდენიმე პასუხი მონიშნო.",
-    type: "multi",
+    title: "რა გინდა, რომ გაიგო ამ ქვიზის შემდეგ?",
+    type: "single",
     options: [
       {
         key: "A",

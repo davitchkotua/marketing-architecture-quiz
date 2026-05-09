@@ -2,6 +2,20 @@ import { Resend } from "resend";
 import type { ScoreResult } from "./scoring";
 import { resultContent, seatContent, type ResultContent, type SeatRecommendationContent } from "./results";
 
+export async function sendLeadNotification({ name, email, phone }: { name: string; email: string; phone?: string }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.RESEND_FROM_EMAIL;
+  if (!apiKey || !from) return;
+
+  const resend = new Resend(apiKey);
+  await resend.emails.send({
+    from,
+    to: "hello@davitchkotua.com",
+    subject: "მარკეტინგის კურსის ქვიზის ახალი ლიდი",
+    text: `ახალი ლიდი:\n\nსახელი: ${name}\nელფოსტა: ${email}\nტელეფონი: ${phone ?? "—"}`,
+  });
+}
+
 interface SendArgs {
   to: string;
   name: string;
@@ -23,9 +37,8 @@ export async function sendQuizResultEmail({ to, name, result }: SendArgs) {
 
   const resend = new Resend(apiKey);
 
-  const courseUrl = process.env.COURSE_URL || "#";
-  const webinarUrl = process.env.WEBINAR_URL || "#";
-  const premiumReviewUrl = process.env.PREMIUM_REVIEW_URL || "#";
+  const courseUrl = "https://www.davitchkotua.com/course";
+  const marketingMriUrl = process.env.MARKETING_MRI_URL || "https://www.davitchkotua.com/mri";
   const diagnosticCallUrl = process.env.DIAGNOSTIC_CALL_URL || "#";
 
   const content = resultContent[result.resultType];
@@ -37,8 +50,8 @@ export async function sendQuizResultEmail({ to, name, result }: SendArgs) {
     from,
     to,
     subject,
-    html: buildHtml({ name, result, content, seat, courseUrl, webinarUrl, premiumReviewUrl, diagnosticCallUrl }),
-    text: buildText({ name, result, content, seat, courseUrl, webinarUrl, premiumReviewUrl, diagnosticCallUrl }),
+    html: buildHtml({ name, result, content, seat, courseUrl, marketingMriUrl, diagnosticCallUrl }),
+    text: buildText({ name, result, content, seat, courseUrl, diagnosticCallUrl }),
   });
 }
 
@@ -48,13 +61,12 @@ interface BuildArgs {
   content: ResultContent;
   seat: SeatRecommendationContent;
   courseUrl: string;
-  webinarUrl: string;
-  premiumReviewUrl: string;
+  marketingMriUrl?: string;
   diagnosticCallUrl: string;
 }
 
 function buildText(a: BuildArgs): string {
-  const { name, result, content, seat, courseUrl } = a;
+  const { name, result, content, seat, courseUrl } = a; // eslint-disable-line @typescript-eslint/no-unused-vars
   return `გამარჯობა, ${name}
 
 მადლობა Marketing Architecture Quiz-ის შევსებისთვის. ქვემოთ არის შენი საწყისი შეფასება: რამდენად სისტემურად იხარჯება მარკეტინგის ბიუჯეტი შენს ბიზნესში და რა უნდა დალაგდეს პირველ რიგში.
@@ -93,7 +105,7 @@ Davit Chkotua / Marketing Architect Studio`;
 }
 
 function buildHtml(a: BuildArgs): string {
-  const { name, result, content, seat, courseUrl, webinarUrl, premiumReviewUrl, diagnosticCallUrl } = a;
+  const { name, result, content, seat, courseUrl, marketingMriUrl, diagnosticCallUrl } = a;
 
   const actions = content.sevenDayActions
     .map(
@@ -182,30 +194,32 @@ function buildHtml(a: BuildArgs): string {
             </tr>
           </table>
 
-          <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:6px;">
             <tr>
               <td style="border:1px solid #2A2D35;border-radius:8px;">
-                <a href="${webinarUrl}" style="display:inline-block;color:#D9D4C8;text-decoration:none;padding:11px 20px;border-radius:8px;font-size:13px;">დარეგისტრირდი ვებინარზე</a>
+                <a href="${marketingMriUrl}" style="display:inline-block;color:#D9D4C8;text-decoration:none;padding:11px 20px;border-radius:8px;font-size:13px;">დაჯავშნე Marketing MRI</a>
               </td>
             </tr>
           </table>
-
-          <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
-            <tr>
-              <td style="border:1px solid #2A2D35;border-radius:8px;">
-                <a href="${premiumReviewUrl}" style="display:inline-block;color:#D9D4C8;text-decoration:none;padding:11px 20px;border-radius:8px;font-size:13px;">მინდა Premium / Review Seat-ის განხილვა</a>
-              </td>
-            </tr>
-          </table>
+          <p style="margin:0 0 12px 0;font-size:11px;line-height:1.5;color:#6B7280;padding-left:4px;">ეს არის სერვისი, სადაც შენი ბიზნესის სრული მარკეტინგული დიაგნოსტიკა და აღსრულების გეგმა შენს მაგივრად გამოცდილი გუნდი გააკეთებს.</p>
           ` : `
           <!-- Low fit — recommend diagnostic call -->
-          <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:6px;">
             <tr>
               <td style="background:#D98A24;border-radius:8px;">
                 <a href="${diagnosticCallUrl}" style="display:inline-block;background:#D98A24;color:#0F1115;text-decoration:none;padding:12px 22px;border-radius:8px;font-size:14px;font-weight:700;">მინდა დიაგნოსტიკური ზარი</a>
               </td>
             </tr>
           </table>
+
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:6px;">
+            <tr>
+              <td style="border:1px solid #2A2D35;border-radius:8px;">
+                <a href="${marketingMriUrl}" style="display:inline-block;color:#D9D4C8;text-decoration:none;padding:11px 20px;border-radius:8px;font-size:13px;">დაჯავშნე Marketing MRI</a>
+              </td>
+            </tr>
+          </table>
+          <p style="margin:0 0 12px 0;font-size:11px;line-height:1.5;color:#6B7280;padding-left:4px;">ეს არის სერვისი, სადაც შენი ბიზნესის სრული მარკეტინგული დიაგნოსტიკა და აღსრულების გეგმა შენს მაგივრად გამოცდილი გუნდი გააკეთებს.</p>
           `}
 
           <!-- Footer -->
