@@ -135,49 +135,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Placeholder social proof ── */}
-      <section className="border-b border-border-dark bg-surface-dark">
-        <div className="mx-auto max-w-4xl px-5 py-16">
-          <div className="text-center mb-3">
-            <h2 className="text-2xl md:text-3xl font-bold">
-              რას უნდა ამბობდეს მონაწილე ამ ქვიზის შემდეგ
-            </h2>
-          </div>
-          <p className="text-center text-xs text-txt-muted mb-10 uppercase tracking-widest">
-            Sample outcomes — რეალური შეფასებებით ჩანაცვლდება launch-ის შემდეგ
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-5">
-            {[
-              {
-                quote:
-                  "პირველად დავინახე, რომ პრობლემა შეიძლება რეკლამაში კი არა, გაყიდვამდე გზაში მქონდეს.",
-                role: "Owner / placeholder",
-              },
-              {
-                quote:
-                  "ქვიზმა დამანახა, რომ მარკეტერს ბევრ რამეს ვთხოვდი, მაგრამ თვითონ არ მქონდა დალაგებული რას ვზომავდით.",
-                role: "Business operator / placeholder",
-              },
-              {
-                quote:
-                  "ყველაზე სასარგებლო იყო ის, რომ მივიღე არა ზოგადი რჩევა, არამედ პირველი დასალაგებელი ზონა.",
-                role: "Founder / placeholder",
-              },
-            ].map((t) => (
-              <div key={t.role} className="card-dark relative">
-                <div className="absolute top-4 right-4 text-[10px] font-semibold text-accent/60 uppercase tracking-widest border border-accent/20 rounded px-1.5 py-0.5">
-                  placeholder
-                </div>
-                <p className="text-sm leading-relaxed text-txt-muted mb-4 italic">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <p className="text-xs text-txt-muted/60 font-medium">— {t.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── Final CTA ── */}
       <section className="bg-surface-dark border-t border-border-dark">
