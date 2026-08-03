@@ -10,7 +10,7 @@ export async function sendLeadNotification({ name, email, phone }: { name: strin
   const resend = new Resend(apiKey);
   await resend.emails.send({
     from,
-    to: "hello@davitchkotua.com",
+    to: process.env.ADMIN_NOTIFY_EMAIL || "hello@marketingarchitect.net",
     subject: "მარკეტინგის კურსის ქვიზის ახალი ლიდი",
     text: `ახალი ლიდი:\n\nსახელი: ${name}\nელფოსტა: ${email}\nტელეფონი: ${phone ?? "—"}`,
   });
